@@ -18,7 +18,7 @@
  		<javac includeAntRuntime="no" fork="true" deprecation="true" classpathref="classpath" destdir="${build.dir}" srcdir="${source.dir}"/>
  	</target>
 	
-	<target name="create_xml" depends="build">
+	<target name="create_xml">
 		<java classname="utils.CreateBWSquaresXML" classpathref="classpath" fork="true"/>		
 	</target>
 	

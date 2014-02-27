@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<is:lineofsquares xmlns:is="http://alud2.ingenieria.deusto.es" length="18">
+	<is:distribution>
+		<is:white/>
+		<is:black/>
+		<is:white/>
+		<is:white/>
+		<is:white/>
+		<is:black/>
+		<is:white/>
+		<is:white/>
+		<is:black/>
+		<is:white/>
+		<is:black/>
+		<is:white/>
+		<is:white/>
+		<is:black/>
+		<is:black/>
+		<is:white/>
+		<is:white/>
+		<is:white/>
+	</is:distribution>
+</is:lineofsquares>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BlackWhiteSquares" basedir=".">	
+	<property environment="env"/>
+	<property name="source.dir" location="src"/>
+	<property name="build.dir" location="bin"/>
+	<property name="lib.dir" location="lib"/>
+	
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement location="${build.dir}"/>
+	</path>		
+ 	
+	<target name="build" description="Builds the project">
+ 		<delete dir="${build.dir}"/>
+ 		<mkdir dir="${build.dir}"/>
+ 		<javac includeAntRuntime="no" fork="true" deprecation="true" classpathref="classpath" destdir="${build.dir}" srcdir="${source.dir}"/>
+ 	</target>
+	
+	<target name="create_xml" depends="build">
+		<java classname="utils.CreateBWSquaresXML" classpathref="classpath" fork="true"/>		
+	</target>
+	
+	<target name="run" depends="build">
+		<java classname="gui.Start" classpathref="classpath" fork="true"/>		
+	</target>
+</project>

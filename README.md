@@ -1,4 +1,4 @@
-BlackWhiteSquares_SI-11
+Black & White Squares
 =======================
 
 Proyecto de Sistemas Inteligentes

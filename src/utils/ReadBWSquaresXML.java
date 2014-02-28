@@ -28,6 +28,11 @@ public class ReadBWSquaresXML extends StateXMLReader {
 			if (qName.equals("is:lineofsquares")) 
 			{
 				this.squares = new boolean[Integer.parseInt(attributes.getValue("length"))];
+				for (int i=0; i<Integer.parseInt(attributes.getValue("length")); i++)
+				{
+					
+				}
+					
 			} 
 			else if (qName.equals("is:distribution"))
 			{

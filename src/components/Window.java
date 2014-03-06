@@ -16,9 +16,9 @@ public class Window extends JFrame {
 		super();
 		setTitle("BlackWhiteSquares");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(800, 400));
+		setSize(new Dimension(800, 500));
 		setLocationRelativeTo(null);
-		setResizable(false);
+		//setResizable(false);
 	}
 
 	public void setContainer(Container container)

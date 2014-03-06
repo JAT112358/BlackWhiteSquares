@@ -23,6 +23,6 @@
 	</target>
 	
 	<target name="run" depends="build">
-		<java classname="gui.Start" classpathref="classpath" fork="true"/>		
+		<java classname="program.MainProgram" classpathref="classpath" fork="true"/>		
 	</target>
 </project>

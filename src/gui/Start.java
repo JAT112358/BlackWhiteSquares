@@ -1,8 +1,10 @@
 package gui;
 
 import javax.swing.JPanel;
-
-import components.Window;
+import es.deusto.ingenieria.is.search.algorithms.blind.BreadthFSwithLog;
+import es.deusto.ingenieria.is.search.algorithms.blind.DepthFSwithLog;
+import formulation.BWSProblem;
+import formulation.Environment;
 import formulation.Square;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -12,43 +14,50 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Start extends JPanel 
 {
 	private static final long 	serialVersionUID = -5851058755580336316L;
 	
 	private SquaresPanel 		squares_panel;
-	private Square[] 			squares = new Square[16];
-	
+	private ArrayList<Square> 	squares = new ArrayList<Square>();
 	private JTextArea			console;
-	
-	public Start() 
-	{
+	private JList<String>		list_algorithms;
+		
+	public Start(final BWSProblem problem) 
+	{			
 		setBackground(Color.LIGHT_GRAY);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{150, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 100, 0, 0};
+		gridBagLayout.columnWidths = new int[]{200, 0, 0};
+		gridBagLayout.rowHeights = new int[]{100, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 2.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		// TEMPORAL TO GENERATE RANDOM SQUARES
+		// TEMPORAL TO GENERATE RANDOM SQUARES START
 		for(int i=0; i<16; i++)
 		{
-			squares[i] = new Square(Math.random() < 0.5, i);
+			squares.add(new Square(Math.random() < 0.5, false));
 		}
+		squares.get(0).setSelected(true);
+		Environment e = new Environment(squares);
+		// TEMPORAL TO GENERATE RANDOM SQUARES END
 		
 		JPanel panel_top = new JPanel();
+		panel_top.setOpaque(false);
 		GridBagConstraints gbc_panel_top = new GridBagConstraints();
 		gbc_panel_top.gridwidth = 2;
-		gbc_panel_top.insets = new Insets(25, 0, 5, 0);
+		gbc_panel_top.insets = new Insets(20, 25, 20, 25);
 		gbc_panel_top.gridx = 0;
-		gbc_panel_top.gridy = 1;
+		gbc_panel_top.gridy = 0;
 		add(panel_top, gbc_panel_top);
 		panel_top.setLayout(new BorderLayout(0, 0));
 		
@@ -59,20 +68,45 @@ public class Start extends JPanel
 		scrollPane.setBorder(new TitledBorder(null, "Algoritmos", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, null));
 		scrollPane.setOpaque(false);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(25, 25, 25, 0);
+		gbc_scrollPane.insets = new Insets(0, 25, 10, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 2;
 		add(scrollPane, gbc_scrollPane);
 		
+		String [] algorithms = new String[]{" BreadthFS", " DepthFS"};
+		list_algorithms = new JList<String>(algorithms);
+		list_algorithms.addMouseListener(new MouseAdapter() 
+		{
+			public void mouseClicked(MouseEvent e) 
+			{
+				JList list = (JList)e.getSource();
+				if (e.getClickCount() == 2) 
+				{
+					int index = list.locationToIndex(e.getPoint());
+					if(index == 0)
+					{
+						problem.solve(BreadthFSwithLog.getInstance(), console);
+					}
+					else if(index == 1)
+					{
+						problem.solve(DepthFSwithLog.getInstance(), console);
+					}
+				}
+			}
+		});
+		list_algorithms.setFont(new Font("Calibri", Font.PLAIN, 16));
+		scrollPane.setViewportView(list_algorithms);
+		
 		JScrollPane scrollPane_console = new JScrollPane();
 		scrollPane_console.setOpaque(false);
 		scrollPane_console.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Consola", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_scrollPane_console = new GridBagConstraints();
-		gbc_scrollPane_console.insets = new Insets(25, 25, 25, 25);
+		gbc_scrollPane_console.gridheight = 2;
+		gbc_scrollPane_console.insets = new Insets(0, 20, 10, 25);
 		gbc_scrollPane_console.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_console.gridx = 1;
-		gbc_scrollPane_console.gridy = 2;
+		gbc_scrollPane_console.gridy = 1;
 		add(scrollPane_console, gbc_scrollPane_console);
 		
 		console = new JTextArea();
@@ -81,22 +115,16 @@ public class Start extends JPanel
 		console.setFont(new Font("Calibri", Font.PLAIN, 15));
 		scrollPane_console.setViewportView(console);
 		
+		JLabel lblSignature = new JLabel("Created by Jordan Aranda & Nerea Barqu\u00EDn");
+		lblSignature.setForeground(Color.DARK_GRAY);
+		GridBagConstraints gbc_lblSignature = new GridBagConstraints();
+		gbc_lblSignature.anchor = GridBagConstraints.EAST;
+		gbc_lblSignature.insets = new Insets(0, 0, 15, 25);
+		gbc_lblSignature.gridx = 1;
+		gbc_lblSignature.gridy = 3;
+		add(lblSignature, gbc_lblSignature);
+		
 		console.setText("Generated B&W Squares: ");
-		for(int i=0; i<16; i++)
-		{
-			if(squares[i].isWhite())
-			{
-				console.append("[W] ");
-			} else {
-				console.append("[B] ");
-			}
-		}
-		console.append("\n");
-	}
-	
-	public static void main (String [] args)
-	{
-		Window.getInstance().setContainer(new Start());
-		Window.getInstance().setVisible(true);
+		console.append(e.toString());
 	}
 }

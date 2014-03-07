@@ -1,11 +1,10 @@
 package gui;
 
 import javax.swing.JPanel;
+import formulation.Environment;
 import es.deusto.ingenieria.is.search.algorithms.blind.BreadthFSwithLog;
 import es.deusto.ingenieria.is.search.algorithms.blind.DepthFSwithLog;
 import formulation.BWSProblem;
-import formulation.Environment;
-import formulation.Square;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -14,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Color;
-import java.util.ArrayList;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
@@ -27,7 +25,6 @@ public class Start extends JPanel
 	private static final long 	serialVersionUID = -5851058755580336316L;
 	
 	private SquaresPanel 		squares_panel;
-	private ArrayList<Square> 	squares = new ArrayList<Square>();
 	private JTextArea			console;
 	private JList<String>		list_algorithms;
 		
@@ -42,15 +39,6 @@ public class Start extends JPanel
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		// TEMPORAL TO GENERATE RANDOM SQUARES START
-		for(int i=0; i<16; i++)
-		{
-			squares.add(new Square(Math.random() < 0.5, false));
-		}
-		squares.get(0).setSelected(true);
-		Environment e = new Environment(squares);
-		// TEMPORAL TO GENERATE RANDOM SQUARES END
-		
 		JPanel panel_top = new JPanel();
 		panel_top.setOpaque(false);
 		GridBagConstraints gbc_panel_top = new GridBagConstraints();
@@ -61,7 +49,7 @@ public class Start extends JPanel
 		add(panel_top, gbc_panel_top);
 		panel_top.setLayout(new BorderLayout(0, 0));
 		
-		squares_panel = new SquaresPanel(squares);
+		squares_panel = new SquaresPanel(((Environment) problem.gatherInitialPercepts()).getSquares());
 		panel_top.add(squares_panel);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -125,6 +113,6 @@ public class Start extends JPanel
 		add(lblSignature, gbc_lblSignature);
 		
 		console.setText("Generated B&W Squares: ");
-		console.append(e.toString());
+		console.append(problem.gatherInitialPercepts().toString());
 	}
 }

@@ -41,11 +41,11 @@ public class Square extends JPanel implements Cloneable{
 
 	public String toString()
 	{
-		String text = "[";
+		String text = "";
 		if(isWhite) 
-			text += "W"; 
+			text += "[W"; 
 		else 
-			text += "B"; 
+			text += "[B"; 
 		if(selected) 
 			text += "*";
 		text += "] ";

@@ -12,6 +12,11 @@ public class Environment extends State
 		this.squares = squares;
 	}
 	
+	public ArrayList<Square> getSquares()
+	{
+		return this.squares;
+	}
+	
 	// HOMEWORK 2/4 [Punto 4]
 	public int getSelectedSquare()
 	{
@@ -70,7 +75,7 @@ public class Environment extends State
 	public String toString() 
 	{
 		String text = "";
-		for(int i=0; i<squares.size(); i++)
+		for(int i = 0; i < squares.size(); i++)
 		{
 			text += squares.get(i);
 		}

@@ -5,15 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import javax.swing.JTextArea;
-
-import utils.ReadBWSquaresXML;
 import es.deusto.ingenieria.is.search.algorithms.Node;
 import es.deusto.ingenieria.is.search.algorithms.SearchMethod;
 import es.deusto.ingenieria.is.search.formulation.Problem;
 import es.deusto.ingenieria.is.search.formulation.State;
-import es.deusto.ingenieria.is.search.xml.StateXMLReader;
 
 public class BWSProblem extends Problem
 {	
@@ -27,14 +23,31 @@ public class BWSProblem extends Problem
 	// HOMEWORK 2/4 [Punto 2]
 	public State gatherInitialPercepts() 
 	{
-		StateXMLReader stateXMLReader = new ReadBWSquaresXML("data/blackwhitesquares1.xml");
-		return stateXMLReader.getState();
+		// StateXMLReader stateXMLReader = new ReadBWSquaresXML("data/blackwhitesquares1.xml");
+		// return stateXMLReader.getState();
+		
+		// TEMPORAL TO GENERATE RANDOM SQUARES START
+		ArrayList<Square> 	squares = new ArrayList<Square>();
+		for(int i=0; i<16; i++)
+		{
+			squares.add(new Square(Math.random() < 0.5, false));
+		}
+		squares.get(0).setSelected(true);
+		Environment e = new Environment(squares);
+		return e;
+		// TEMPORAL TO GENERATE RANDOM SQUARES END
 	}
 	
 	// TODO
 	private void createFinalStates() 
 	{
-		this.addFinalState(new Environment(null)); 
+		ArrayList<Square> 	squares = new ArrayList<Square>();
+		for(int i=0; i<16; i++)
+		{
+			squares.add(new Square(Math.random() < 0.5, false));
+		}
+		Environment e = new Environment(squares);
+		this.addFinalState(e); 
 	}
 	
 	// HOMEWORK 2/4 [Punto 4]
@@ -49,7 +62,7 @@ public class BWSProblem extends Problem
 	{		
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss.S");
 		Date beginDate = GregorianCalendar.getInstance().getTime();
-		console.append("\n* Start '" + searchMethod.getClass().getSimpleName() + "' (" + formatter.format(beginDate) + ")");
+		console.append("\n\n* Start '" + searchMethod.getClass().getSimpleName() + "' (" + formatter.format(beginDate) + ")");
 		Node finalNode = searchMethod.search(this, this.getInitialStates().get(0));
 		Date endDate = GregorianCalendar.getInstance().getTime();		
 		console.append("\n* End   '" + searchMethod.getClass().getSimpleName() + "' (" + formatter.format(endDate) + ")");
@@ -70,14 +83,17 @@ public class BWSProblem extends Problem
 		
 		console.append("\n" + time);
 		
-		if (finalNode != null) {
-			System.out.println("\n- Solution found!     :)");
+		if (finalNode != null) 
+		{
+			console.append("\n- Solution found!     :)");
 			List<String> operators = new ArrayList<String>();
 			searchMethod.solutionPath(finalNode, operators);
 			searchMethod.createSolutionLog(operators);			
-			System.out.println("- Final state:" + finalNode.getState());
-		} else {
-			System.out.println("\n- Unable to find the solution!     :(");
+			console.append("\n- Final state:" + finalNode.getState());
+		} 
+		else 
+		{
+			console.append("\n- Unable to find the solution! :(");
 		}
 	}
 }

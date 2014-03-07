@@ -68,10 +68,9 @@ public class Start extends JPanel
 		{
 			public void mouseClicked(MouseEvent e) 
 			{
-				JList list = (JList)e.getSource();
 				if (e.getClickCount() == 2) 
 				{
-					int index = list.locationToIndex(e.getPoint());
+					int index = list_algorithms.locationToIndex(e.getPoint());
 					if(index == 0)
 					{
 						problem.solve(BreadthFSwithLog.getInstance(), console);

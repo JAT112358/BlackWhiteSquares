@@ -20,18 +20,14 @@ public class Environment extends State
 	// HOMEWORK 2/4 [Punto 4]
 	public int getSelectedSquare()
 	{
-		boolean enc = false;
-		int i = 0;
-		while( ! enc && i<squares.size())
+		for(int i = 0; i < squares.size(); i++)
 		{
 			if(squares.get(i).isSelected())
 			{
-				enc = true;
-			} else {
-				i++;
+				return i;
 			}
 		}
-		return i;
+		return squares.size() + 1;
 	}
 	
 	// HOMEWORK 2/4 [Punto 4]
@@ -46,11 +42,11 @@ public class Environment extends State
 	// HOMEWORK 2/4 [Punto 4]
 	public void move(int positions)
 	{
-		int pos = getSelectedSquare();
-		squares.get(pos).setSelected(false);
-		if(pos + positions <= squares.size())
+		int squarePos = getSelectedSquare();
+		squares.get(squarePos).setSelected(false);
+		if(squarePos + positions <= squares.size())
 		{
-			squares.get(pos+positions).setSelected(true);
+			squares.get(squarePos + positions).setSelected(true);
 		}
 	}
 	

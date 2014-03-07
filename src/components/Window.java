@@ -18,7 +18,6 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(800, 500));
 		setLocationRelativeTo(null);
-		//setResizable(false);
 	}
 
 	public void setContainer(Container container)

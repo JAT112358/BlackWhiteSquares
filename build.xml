@@ -22,6 +22,18 @@
 		<java classname="utils.CreateBWSquaresXML" classpathref="classpath" fork="true"/>		
 	</target>
 	
+	<target name="unit_test_Operator">
+		<java classname="formulation.Move" classpathref="classpath" fork="true"/>		
+	</target>
+	
+	<target name="unit_test_State">
+		<java classname="formulation.Environment" classpathref="classpath" fork="true"/>		
+	</target>
+	
+	<target name="unit_test_Problem">
+		<java classname="formulation.BWSProblem" classpathref="classpath" fork="true"/>		
+	</target>
+	
 	<target name="run" depends="build">
 		<java classname="program.MainProgram" classpathref="classpath" fork="true"/>		
 	</target>

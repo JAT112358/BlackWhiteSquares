@@ -27,9 +27,12 @@ public class Start extends JPanel
 	private SquaresPanel 		squares_panel;
 	private JTextArea			console;
 	private JList<String>		list_algorithms;
+	private BWSProblem			problem;
 		
 	public Start(final BWSProblem problem) 
 	{			
+		this.problem = problem;
+		
 		setBackground(Color.LIGHT_GRAY);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -73,16 +76,17 @@ public class Start extends JPanel
 					int index = list_algorithms.locationToIndex(e.getPoint());
 					if(index == 0)
 					{
-						problem.solve(BreadthFSwithLog.getInstance(), console);
+						Start.this.problem.solve(BreadthFSwithLog.getInstance(), console);
 					}
 					else if(index == 1)
 					{
-						problem.solve(DepthFSwithLog.getInstance(), console);
+						Start.this.problem.solve(DepthFSwithLog.getInstance(), console);
 					}
 				}
 			}
 		});
 		list_algorithms.setFont(new Font("Calibri", Font.PLAIN, 16));
+		list_algorithms.setOpaque(false);
 		scrollPane.setViewportView(list_algorithms);
 		
 		JScrollPane scrollPane_console = new JScrollPane();
@@ -98,6 +102,7 @@ public class Start extends JPanel
 		
 		console = new JTextArea();
 		console.setMargin(new Insets(5, 5, 5, 5));
+		console.setOpaque(false);
 		console.setForeground(Color.BLACK);
 		console.setFont(new Font("Calibri", Font.PLAIN, 15));
 		scrollPane_console.setViewportView(console);

@@ -9,8 +9,8 @@ import es.deusto.ingenieria.is.search.xml.StateXMLReader;
 import formulation.Environment;
 import formulation.Square;
 
-public class ReadBWSquaresXML extends StateXMLReader {
-
+public class ReadBWSquaresXML extends StateXMLReader 
+{
 	private ArrayList<Square> 	squares;
 
 	public ReadBWSquaresXML(String xmlFile) 
@@ -20,26 +20,22 @@ public class ReadBWSquaresXML extends StateXMLReader {
 	
 	public State getState() 
 	{
-		return new Environment(this.squares);
+		Environment environment = new Environment(this.squares);
+		environment.setSelectedIndex(0);
+		return environment;
 	}
 
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException 
 	{
 		try {		
-			
 			if (qName.equals("is:lineofsquares")) 
 			{
-				//this.squares = new Square[Integer.parseInt(attributes.getValue("length"))];
-				for (int i=0; i<Integer.parseInt(attributes.getValue("length")); i++)
-				{
-					
-				}
-					
+				this.squares = new ArrayList<Square>();	
 			} 
-			else if (qName.equals("is:distribution"))
+			else if (qName.equals("is:white") || qName.equals("is:black"))
 			{
-				// this.squares[0] = true;
-			} 
+				this.squares.add(new Square(qName.equals("is:white")));
+			}
 		} 
 		catch (Exception ex) 
 		{

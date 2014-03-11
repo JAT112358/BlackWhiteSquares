@@ -11,8 +11,7 @@ public class Window extends JFrame {
 	private static final long	serialVersionUID	= -8641413596663241575L;
 	private static Window		instance;
 
-	private Window()
-	{
+	private Window() {
 		super();
 		setTitle("BlackWhiteSquares");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -20,16 +19,13 @@ public class Window extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	public void setContainer(Container container)
-	{
+	public void setContainer(Container container) {
 		setContentPane(container);
 		((JPanel) getContentPane()).updateUI();
 	}
 
-	public static Window getInstance()
-	{
-		if (instance == null)
-		{
+	public static Window getInstance() {
+		if (instance == null) {
 			instance = new Window();
 		}
 		return instance;

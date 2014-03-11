@@ -1,11 +1,14 @@
 package formulation;
 
 import java.util.ArrayList;
+
+import utils.ReadBWSquaresXML;
 import es.deusto.ingenieria.is.search.formulation.State;
 
 public class Environment extends State
 {
-	private ArrayList<Square> squares;
+	private ArrayList<Square> 	squares;
+	private int					selected;
 	
 	public Environment(ArrayList<Square> squares) 
 	{
@@ -17,36 +20,31 @@ public class Environment extends State
 		return this.squares;
 	}
 	
-	// HOMEWORK 2/4 [Punto 4]
-	public int getSelectedSquare()
+	public int getSelectedIndex()
 	{
-		for(int i = 0; i < squares.size(); i++)
-		{
-			if(squares.get(i).isSelected())
-			{
-				return i;
-			}
-		}
-		return squares.size() + 1;
+		return this.selected;
+	}
+	
+	public void setSelectedIndex(int selected)
+	{
+		this.selected = selected;
 	}
 	
 	// HOMEWORK 2/4 [Punto 4]
-	public boolean canMove(int positions)
+	public boolean canMove(int positions) 
 	{
-		Square square = squares.get(getSelectedSquare());
 		return positions == Move.ONE || 
-			   (square.isWhite() && positions == Move.TWO) || 
-			   ( ! square.isWhite() && positions == Move.FOUR); 
+			   (squares.get(selected).isWhite() && positions == Move.TWO) || 
+			   ( ! squares.get(selected).isWhite() && positions == Move.FOUR); 
 	}
 	
 	// HOMEWORK 2/4 [Punto 4]
-	public void move(int positions)
+	public void move(int positions) 
 	{
-		int squarePos = getSelectedSquare();
-		squares.get(squarePos).setSelected(false);
-		if(squarePos + positions <= squares.size())
-		{
-			squares.get(squarePos + positions).setSelected(true);
+		if(selected + positions < squares.size()) {
+			selected += positions;
+		} else {
+			System.out.println("Final: " + selected);
 		}
 	}
 	
@@ -74,7 +72,45 @@ public class Environment extends State
 		for(int i = 0; i < squares.size(); i++)
 		{
 			text += squares.get(i);
+			if(i == selected)
+			{
+				text +="*";
+			}
+			text += " ";
 		}
 		return text;
+	}
+	
+	public boolean isFinalState(int selected)
+	{
+		return selected >= this.squares.size();
+	}
+	
+	public Environment clone() 
+	{
+		Environment newEnvironment = new Environment(this.squares);
+		newEnvironment.setSelectedIndex(this.selected);
+		return newEnvironment;
+	}
+	
+	// HOMEWORK 2/4 [Punto 7]
+	public static void main (String [] args)
+	{
+		ReadBWSquaresXML reader = new ReadBWSquaresXML("data/blackwhitesquares1.xml");
+		Environment e = (Environment) reader.getState();
+		
+		// SQUARES
+		System.out.println("Squares: " + e.toString());
+		
+		// CAN MOVE
+		if(e.canMove(Move.TWO))
+		{
+			System.out.println("Can move " + Move.TWO + " positions!");
+			// MOVE
+			e.move(Move.TWO);
+			System.out.println("Squares: " + e.toString());
+		} else {
+			System.out.println("Can not move " + Move.TWO + " positions :(");
+		}
 	}
 }

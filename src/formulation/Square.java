@@ -4,7 +4,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class Square extends JPanel implements Cloneable 
+public class Square extends JPanel
 {
 	private static final long 	serialVersionUID = -4162750023324593339L;
 	private boolean				isWhite;
@@ -36,7 +36,6 @@ public class Square extends JPanel implements Cloneable
 	// HOMEWORK 2/4 [Punto 3]
 	public boolean equals(Object obj) 
 	{
-		return obj != null && obj instanceof Square
-			   && ((Square) obj).isWhite == isWhite;
+		return obj != null && obj instanceof Square && ((Square) obj).isWhite == isWhite;
 	}
 }

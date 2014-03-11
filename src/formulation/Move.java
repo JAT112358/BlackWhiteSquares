@@ -35,7 +35,7 @@ public class Move extends Operator
 	// HOMEWORK 2/4 [Punto 4]
 	protected State effect(State state) 
 	{
-		Environment newEnvironment = ((Environment) state);
+		Environment newEnvironment = ((Environment) state).clone();
 		System.out.println("Selected: " + newEnvironment.toString());
 		newEnvironment.move(positions);
 		return newEnvironment;

@@ -17,10 +17,8 @@ import es.deusto.ingenieria.is.search.xml.StateXMLReader;
 
 public class BWSProblem extends Problem
 {	
-	
 	public BWSProblem() 
 	{
-		super();
 		this.createOperators();
 	}
 	
@@ -43,7 +41,7 @@ public class BWSProblem extends Problem
 	}
 	
 	// HOMEWORK 2/4 [Punto 4]
-	private void createOperators() 
+	protected void createOperators() 
 	{
 		this.addOperator(new Move(Move.ONE));
 		this.addOperator(new Move(Move.TWO));

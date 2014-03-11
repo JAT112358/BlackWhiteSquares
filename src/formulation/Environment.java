@@ -33,15 +33,15 @@ public class Environment extends State
 	// HOMEWORK 2/4 [Punto 4]
 	public boolean canMove(int positions) 
 	{
-		return positions == Move.ONE || 
+		return selected < squares.size() && (positions == Move.ONE || 
 			   (squares.get(selected).isWhite() && positions == Move.TWO) || 
-			   ( ! squares.get(selected).isWhite() && positions == Move.FOUR); 
+			   ( ! squares.get(selected).isWhite() && positions == Move.FOUR)); 
 	}
 	
 	// HOMEWORK 2/4 [Punto 4]
 	public void move(int positions) 
 	{
-		if(selected + positions < squares.size()) {
+		if(selected + positions <= squares.size()) {
 			selected += positions;
 		} else {
 			System.out.println("Final: " + selected);
@@ -69,9 +69,9 @@ public class Environment extends State
 		return text;
 	}
 	
-	public boolean isFinalState(int selected)
+	public boolean isFinalState()
 	{
-		return selected >= this.squares.size();
+		return selected > this.squares.size() - 1;
 	}
 	
 	public Environment clone() 

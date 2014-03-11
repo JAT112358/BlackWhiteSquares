@@ -25,7 +25,7 @@ public class Move extends Operator
 		{
 			Environment newEnvironment = currentEnvironment.clone();	
 			newEnvironment.setSelectedIndex(currentEnvironment.getSelectedIndex());
-			return true;
+			return ! newEnvironment.isFinalState();
 			// return (newEnv.getQueenAttacks(queen) == 0);
 		} else {
 			return false;

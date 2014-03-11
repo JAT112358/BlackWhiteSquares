@@ -51,19 +51,7 @@ public class Environment extends State
 	// HOMEWORK 2/4 [Punto 3]
 	public boolean equals(Object obj) 
 	{
-		if(obj != null && obj instanceof Environment)
-		{
-			for(int i=0; i<squares.size(); i++)
-			{
-				if( ! ((Environment)obj).squares.get(i).equals(squares.get(i)))
-				{
-					return false;
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}
+		return obj != null && obj instanceof Environment && ((Environment)obj).selected == this.selected;
 	}
 
 	public String toString() 

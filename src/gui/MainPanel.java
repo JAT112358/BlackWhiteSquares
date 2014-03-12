@@ -2,8 +2,8 @@ package gui;
 
 import javax.swing.JPanel;
 import formulation.Environment;
-import es.deusto.ingenieria.is.search.algorithms.blind.BreadthFSwithLog;
-import es.deusto.ingenieria.is.search.algorithms.blind.DepthFSwithLog;
+import es.deusto.ingenieria.is.search.algorithms.blind.BreadthFS;
+import es.deusto.ingenieria.is.search.algorithms.blind.DepthFS;
 import formulation.BWSProblem;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -14,13 +14,12 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Start extends JPanel 
+public class MainPanel extends JPanel 
 {
 	private static final long 	serialVersionUID = -5851058755580336316L;
 	
@@ -29,14 +28,14 @@ public class Start extends JPanel
 	private JList<String>		list_algorithms;
 	private BWSProblem			problem;
 		
-	public Start(final BWSProblem problem) 
+	public MainPanel(final BWSProblem problem) 
 	{			
 		this.problem = problem;
 		
 		setBackground(Color.LIGHT_GRAY);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{200, 0, 0};
+		gridBagLayout.columnWidths = new int[]{180, 0, 0};
 		gridBagLayout.rowHeights = new int[]{100, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 2.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
@@ -56,7 +55,7 @@ public class Start extends JPanel
 		panel_top.add(squares_panel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new TitledBorder(null, "Algoritmos", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, null));
+		scrollPane.setBorder(new TitledBorder(null, "Algorithms", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, null));
 		scrollPane.setOpaque(false);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 25, 10, 5);
@@ -76,11 +75,15 @@ public class Start extends JPanel
 					int index = list_algorithms.locationToIndex(e.getPoint());
 					if(index == 0)
 					{
-						Start.this.problem.solve(BreadthFSwithLog.getInstance(), console);
+						MainPanel.this.problem.restart();
+						MainPanel.this.console.setText("");
+						MainPanel.this.problem.solve(BreadthFS.getInstance(), console);
 					}
 					else if(index == 1)
 					{
-						Start.this.problem.solve(DepthFSwithLog.getInstance(), console);
+						MainPanel.this.problem.restart();
+						MainPanel.this.console.setText("");
+						MainPanel.this.problem.solve(DepthFS.getInstance(), console);
 					}
 				}
 			}
@@ -91,7 +94,7 @@ public class Start extends JPanel
 		
 		JScrollPane scrollPane_console = new JScrollPane();
 		scrollPane_console.setOpaque(false);
-		scrollPane_console.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Consola", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
+		scrollPane_console.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, null));
 		GridBagConstraints gbc_scrollPane_console = new GridBagConstraints();
 		gbc_scrollPane_console.gridheight = 2;
 		gbc_scrollPane_console.insets = new Insets(0, 20, 10, 25);
@@ -101,7 +104,7 @@ public class Start extends JPanel
 		add(scrollPane_console, gbc_scrollPane_console);
 		
 		console = new JTextArea();
-		console.setMargin(new Insets(5, 5, 5, 5));
+		console.setMargin(new Insets(5, 2, 5, 2));
 		console.setOpaque(false);
 		console.setForeground(Color.BLACK);
 		console.setFont(new Font("Calibri", Font.PLAIN, 15));
@@ -116,7 +119,7 @@ public class Start extends JPanel
 		gbc_lblSignature.gridy = 3;
 		add(lblSignature, gbc_lblSignature);
 		
-		console.setText("Generated B&W Squares: ");
+		console.setText("Initial State: ");
 		console.append(problem.gatherInitialPercepts().toString());
 	}
 }

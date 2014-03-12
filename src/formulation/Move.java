@@ -6,13 +6,25 @@ import es.deusto.ingenieria.is.search.formulation.State;
 
 public class Move extends Operator 
 {
-	public static int 	ONE = 1;
-	public static int 	TWO = 2;
-	public static int 	FOUR = 4;
+	public static enum Positions {
+		ONE(1),
+		TWO(2),
+		FOUR(4);
+		
+		private int positions;
+		
+		private Positions(int positions) {
+	        this.positions = positions;
+	    }
+		
+		private int getPositions() {
+			return this.positions;
+		}
+	}
 	
-	private int 		positions;
+	private Positions 		positions;
 	
-	public Move(int positions)
+	public Move(Positions positions)
 	{
 		this.positions = positions;
 	}
@@ -21,14 +33,18 @@ public class Move extends Operator
 	protected boolean isApplicable(State state) 
 	{
 		Environment currentEnvironment = (Environment) state;
-		if(currentEnvironment.canMove(positions))
+		Environment newEnvironment = currentEnvironment.clone();	
+		newEnvironment.setSelectedIndex(currentEnvironment.getSelectedIndex());
+		switch(positions.getPositions())
 		{
-			Environment newEnvironment = currentEnvironment.clone();	
-			newEnvironment.setSelectedIndex(currentEnvironment.getSelectedIndex());
-			return ! newEnvironment.isFinalState();
-			// return (newEnv.getQueenAttacks(queen) == 0);
-		} else {
-			return false;
+			case 2:
+				return currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).isWhite();
+				//break;
+			case 4:
+				return ! currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).isWhite();
+				//break;
+			default:
+				return true;
 		}
 	}
 	
@@ -36,9 +52,13 @@ public class Move extends Operator
 	protected State effect(State state) 
 	{
 		Environment newEnvironment = ((Environment) state).clone();
-		System.out.println("Selected: " + newEnvironment.toString());
-		newEnvironment.move(positions);
+		newEnvironment.move(positions.getPositions());
 		return newEnvironment;
+	}
+	
+	public String getName()
+	{
+		return this.positions.toString();
 	}
 	
 	// HOMEWORK 2/4 [Punto 7]
@@ -51,16 +71,16 @@ public class Move extends Operator
 		System.out.println("Initial state: " +e.toString());
 		
 		// CONSTRUCTOR
-		Move move = new Move(Move.TWO);
+		Move move = new Move(Move.Positions.TWO);
 		
 		// IS APPLICABLE
 		if(move.isApplicable(e))
 		{
 			System.out.println("Is applicable!");
 			// EFFECT
-			move.effect(e);
+			Environment newEnvironment = (Environment) move.effect(e);
 			// FINAL WITH EFFECT
-			System.out.println("Final state: " + e.toString());
+			System.out.println("Final state: " + newEnvironment.toString());
 		} 
 		else 
 		{

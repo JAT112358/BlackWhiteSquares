@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<is:lineofsquares xmlns:is="http://alud2.ingenieria.deusto.es" length="18">
+<is:lineofsquares xmlns:is="http://alud2.ingenieria.deusto.es" length="18" label="BWSquares">
 	<is:distribution>
 		<is:white/>
 		<is:black/>

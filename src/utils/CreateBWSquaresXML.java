@@ -31,6 +31,9 @@ public class CreateBWSquaresXML
 			Attr at2 = doc.createAttribute("length");
 			at2.setValue(Integer.toString(length));
 			rootElement.setAttributeNode(at2);
+			Attr at3 = doc.createAttribute("label");
+			at3.setValue("BWSquares");
+			rootElement.setAttributeNode(at3);
 			doc.appendChild(rootElement);
 	 
 			Element header = doc.createElement("is:distribution");

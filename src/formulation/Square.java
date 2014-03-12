@@ -9,7 +9,6 @@ public class Square extends JPanel
 	private static final long 	serialVersionUID = -4162750023324593339L;
 	private boolean				isWhite;
 	
-	
 	public Square(boolean isWhite) 
 	{
 		super();
@@ -24,7 +23,7 @@ public class Square extends JPanel
 	{
 		return isWhite;
 	}
-
+	
 	public String toString() 
 	{
 		if(isWhite) 

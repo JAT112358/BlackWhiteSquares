@@ -31,20 +31,11 @@ public class Environment extends State
 	}
 	
 	// HOMEWORK 2/4 [Punto 4]
-	public boolean canMove(int positions) 
-	{
-		return selected < squares.size() && (positions == Move.ONE || 
-			   (squares.get(selected).isWhite() && positions == Move.TWO) || 
-			   ( ! squares.get(selected).isWhite() && positions == Move.FOUR)); 
-	}
-	
-	// HOMEWORK 2/4 [Punto 4]
 	public void move(int positions) 
 	{
-		if(selected + positions <= squares.size()) {
+		if(selected + positions <= squares.size()) 
+		{
 			selected += positions;
-		} else {
-			System.out.println("Final: " + selected);
 		}
 	}
 	
@@ -59,19 +50,14 @@ public class Environment extends State
 		String text = "";
 		for(int i = 0; i < squares.size(); i++)
 		{
-			text += squares.get(i);
+			text += squares.get(i).toString();
 			if(i == selected)
 			{
-				text +="*";
+				text += "*";
 			}
 			text += " ";
 		}
 		return text;
-	}
-	
-	public boolean isFinalState()
-	{
-		return selected > this.squares.size() - 1;
 	}
 	
 	public Environment clone() 
@@ -91,14 +77,14 @@ public class Environment extends State
 		System.out.println("Squares: " + e.toString());
 		
 		// CAN MOVE
-		if(e.canMove(Move.TWO))
-		{
-			System.out.println("Can move " + Move.TWO + " positions!");
-			// MOVE
-			e.move(Move.TWO);
-			System.out.println("Squares: " + e.toString());
-		} else {
-			System.out.println("Can not move " + Move.TWO + " positions :(");
-		}
+//		if(e.canMove(Move.TWO))
+//		{
+//			System.out.println("Can move " + Move.TWO + " positions!");
+//			// MOVE
+//			e.move(Move.TWO);
+//			System.out.println("Squares: " + e.toString());
+//		} else {
+//			System.out.println("Can not move " + Move.TWO + " positions :(");
+//		}
 	}
 }

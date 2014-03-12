@@ -19,8 +19,7 @@ import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MainPanel extends JPanel 
-{
+public class MainPanel extends JPanel {
 	private static final long 	serialVersionUID = -5851058755580336316L;
 	
 	private SquaresPanel 		squares_panel;
@@ -28,8 +27,7 @@ public class MainPanel extends JPanel
 	private JList<String>		list_algorithms;
 	private BWSProblem			problem;
 		
-	public MainPanel(final BWSProblem problem) 
-	{			
+	public MainPanel(final BWSProblem problem) {			
 		this.problem = problem;
 		
 		setBackground(Color.LIGHT_GRAY);
@@ -66,21 +64,15 @@ public class MainPanel extends JPanel
 		
 		String [] algorithms = new String[]{" BreadthFS", " DepthFS"};
 		list_algorithms = new JList<String>(algorithms);
-		list_algorithms.addMouseListener(new MouseAdapter() 
-		{
-			public void mouseClicked(MouseEvent e) 
-			{
-				if (e.getClickCount() == 2) 
-				{
+		list_algorithms.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
 					int index = list_algorithms.locationToIndex(e.getPoint());
-					if(index == 0)
-					{
+					if(index == 0) {
 						MainPanel.this.problem.restart();
 						MainPanel.this.console.setText("");
 						MainPanel.this.problem.solve(BreadthFS.getInstance(), console);
-					}
-					else if(index == 1)
-					{
+					} else if(index == 1) {
 						MainPanel.this.problem.restart();
 						MainPanel.this.console.setText("");
 						MainPanel.this.problem.solve(DepthFS.getInstance(), console);

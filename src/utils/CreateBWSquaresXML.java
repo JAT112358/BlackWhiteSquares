@@ -13,12 +13,9 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class CreateBWSquaresXML
-{
-	public static void create(int length)
-	{
-		try { 
-			
+public class CreateBWSquaresXML {
+	public static void create(int length) {
+		try { 		
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 	 
@@ -42,13 +39,10 @@ public class CreateBWSquaresXML
 			// GENERATE RANDOM SQUARES
 			int contW = 0;
 			int contB = 0;
-			for(int i=0; i<length; i++)
-			{
+			for(int i=0; i<length; i++) {
 				Element e = null;
-				if(Math.random() < 0.5)
-				{
-					if(contW < 3)
-					{
+				if(Math.random() < 0.5) {
+					if(contW < 3) {
 						System.out.print("[W] ");
 						e = doc.createElement("is:white");
 						contW++;
@@ -96,8 +90,7 @@ public class CreateBWSquaresXML
 //			elements.add(doc.createElement("is:white"));
 //			elements.add(doc.createElement("is:white"));
 			
-//			for(int i=0; i<elements.size(); i++)
-//			{
+//			for(int i=0; i<elements.size(); i++) {
 //				header.appendChild(elements.get(i));
 //			}
 	 
@@ -117,9 +110,7 @@ public class CreateBWSquaresXML
 		  }
 	}
 	
-	
-	public static void main(String [] args)
-	{
+	public static void main(String [] args) {
 		CreateBWSquaresXML.create(20);
 	}
 }

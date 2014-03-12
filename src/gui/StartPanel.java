@@ -79,7 +79,6 @@ public class StartPanel extends JPanel implements MouseListener {
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 2;
 		add(lblDescription, gbc_lblDescription);
-
 	}
 
 	public void mouseClicked(MouseEvent e) {

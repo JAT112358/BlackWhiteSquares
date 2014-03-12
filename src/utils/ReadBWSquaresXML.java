@@ -9,36 +9,27 @@ import es.deusto.ingenieria.is.search.xml.StateXMLReader;
 import formulation.Environment;
 import formulation.Square;
 
-public class ReadBWSquaresXML extends StateXMLReader 
-{
+public class ReadBWSquaresXML extends StateXMLReader {
 	private ArrayList<Square> 	squares;
 
-	public ReadBWSquaresXML(String xmlFile) 
-	{
+	public ReadBWSquaresXML(String xmlFile) {
 		super(xmlFile);
 	}
 	
-	public State getState() 
-	{
+	public State getState() {
 		Environment environment = new Environment(this.squares);
 		environment.setSelectedIndex(0);
 		return environment;
 	}
 
-	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException 
-	{
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		try {		
-			if (qName.equals("is:lineofsquares")) 
-			{
+			if (qName.equals("is:lineofsquares")) {
 				this.squares = new ArrayList<Square>();	
-			} 
-			else if (qName.equals("is:white") || qName.equals("is:black"))
-			{
+			} else if (qName.equals("is:white") || qName.equals("is:black")) {
 				this.squares.add(new Square(qName.equals("is:white")));
 			}
-		} 
-		catch (Exception ex) 
-		{
+		} catch (Exception ex) {
 			System.out.println(this.getClass().getName() + ".startElement(): " + ex);
 		}
 	}

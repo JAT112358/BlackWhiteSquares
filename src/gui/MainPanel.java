@@ -29,6 +29,7 @@ import components.Window;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import javax.swing.JCheckBox;
 
 public class MainPanel extends JPanel {
 	private static final long 	serialVersionUID = -5851058755580336316L;
@@ -36,6 +37,7 @@ public class MainPanel extends JPanel {
 	private SquaresPanel 		squares_panel;
 	private JTextArea			console;
 	private JList<String>		list_algorithms;
+	private JCheckBox 			checkBoxLog;
 	private BWSProblem			problem;
 		
 	public MainPanel(final BWSProblem problem) {			
@@ -45,9 +47,9 @@ public class MainPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{180, 0, 0};
-		gridBagLayout.rowHeights = new int[]{100, 50, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{100, 50, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 2.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JPanel panel_top = new JPanel();
@@ -94,6 +96,7 @@ public class MainPanel extends JPanel {
 		scrollPane.setBorder(new TitledBorder(null, "Algorithms", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, null));
 		scrollPane.setOpaque(false);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridheight = 2;
 		gbc_scrollPane.insets = new Insets(0, 25, 10, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
@@ -136,11 +139,26 @@ public class MainPanel extends JPanel {
 		add(scrollPane_console, gbc_scrollPane_console);
 		
 		console = new JTextArea();
+		console.setEditable(false);
 		console.setMargin(new Insets(5, 2, 5, 2));
 		console.setOpaque(false);
 		console.setForeground(Color.BLACK);
 		console.setFont(new Font("Calibri", Font.PLAIN, 15));
 		scrollPane_console.setViewportView(console);
+		
+		checkBoxLog = new JCheckBox("Create solution Log");
+		checkBoxLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				problem.setLogEnable(checkBoxLog.isSelected());
+			}
+		});
+		checkBoxLog.setFont(new Font("Calibri", Font.PLAIN, 16));
+		GridBagConstraints gbc_checkBoxLog = new GridBagConstraints();
+		gbc_checkBoxLog.anchor = GridBagConstraints.WEST;
+		gbc_checkBoxLog.insets = new Insets(0, 20, 5, 0);
+		gbc_checkBoxLog.gridx = 1;
+		gbc_checkBoxLog.gridy = 3;
+		add(checkBoxLog, gbc_checkBoxLog);
 		
 		JLabel lblSignature = new JLabel("Created by Jordan Aranda & Nerea Barqu\u00EDn");
 		lblSignature.setForeground(Color.DARK_GRAY);
@@ -148,7 +166,7 @@ public class MainPanel extends JPanel {
 		gbc_lblSignature.anchor = GridBagConstraints.EAST;
 		gbc_lblSignature.insets = new Insets(0, 0, 15, 25);
 		gbc_lblSignature.gridx = 1;
-		gbc_lblSignature.gridy = 3;
+		gbc_lblSignature.gridy = 4;
 		add(lblSignature, gbc_lblSignature);
 		
 		console.setText("Initial State: ");

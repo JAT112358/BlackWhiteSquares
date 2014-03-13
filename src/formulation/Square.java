@@ -49,9 +49,11 @@ public class Square extends JPanel {
 		}
 		g.fillRect(3, 3, this.getWidth()-6, this.getHeight()-6);
 		g.setFont(new Font("Arial", Font.BOLD, 20));
-		if(step >= 0) {
-			g.setColor(Color.RED); 
+		g.setColor(Color.BLUE);
+		if(step >= 0 && step < 10) { 
 			g.drawString(Integer.toString(step),  this.getWidth()/2 - 4, this.getHeight()/2 + 8);
+		} else if(step >=10 && step <=100){
+			g.drawString(Integer.toString(step),  this.getWidth()/2 - 8, this.getHeight()/2 + 8);
 		}
 	}
 }

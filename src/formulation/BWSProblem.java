@@ -16,11 +16,13 @@ import es.deusto.ingenieria.is.search.xml.StateXMLReader;
 import gui.SquaresPanel;
 
 public class BWSProblem extends Problem{	
-	private String path;
+	private String 	path;
+	private boolean	logEnable; 
 	
 	public BWSProblem(String path) {
 		this.createOperators();
 		this.path = path;
+		this.logEnable = false;
 	}
 	
 	// HOMEWORK 2/4 [Punto 2]
@@ -47,6 +49,10 @@ public class BWSProblem extends Problem{
 	
 	public void restart() {
 		this.addInitialState(gatherInitialPercepts());
+	}
+	
+	public void setLogEnable(boolean enable) {
+		this.logEnable = enable;
 	}
 	
 	public void solve(SearchMethod searchMethod, JTextArea console, SquaresPanel squaresPanel) {		
@@ -82,7 +88,8 @@ public class BWSProblem extends Problem{
 			System.out.println("\n- Solution found!");
 			List<String> operators = new ArrayList<String>();
 			searchMethod.solutionPath(finalNode, operators);
-			searchMethod.createSolutionLog(operators);			
+			if(logEnable)
+				searchMethod.createSolutionLog(operators);			
 			console.append("\nFinal state: " + finalNode.getState());
 			System.out.println("\n- Final state:" + finalNode.getState());
 			console.append("\nSteps: ");

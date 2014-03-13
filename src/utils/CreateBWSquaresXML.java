@@ -97,7 +97,7 @@ public class CreateBWSquaresXML {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("data//blackwhitesquares.xml"));
+			StreamResult result = new StreamResult(new File("data//blackwhitesquares" + length + ".xml"));
 	 
 			transformer.transform(source, result);
 	 
@@ -111,6 +111,6 @@ public class CreateBWSquaresXML {
 	}
 	
 	public static void main(String [] args) {
-		CreateBWSquaresXML.create(20);
+		CreateBWSquaresXML.create(50);
 	}
 }

@@ -12,10 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import components.Window;
 import formulation.BWSProblem;
 import utils.JFile;
@@ -86,7 +82,7 @@ public class StartPanel extends JPanel implements MouseListener {
 			File file = JFile.getFile("XML file", "xml");
 			if(file != null)
 			{
-				if(isValidXML(file))
+				if(JFile.isValidXML(file, "label", "BWSquares"))
 				{
 					BWSProblem problem = new BWSProblem(file.getAbsolutePath());			
 					problem.addInitialState(problem.gatherInitialPercepts());
@@ -131,20 +127,6 @@ public class StartPanel extends JPanel implements MouseListener {
 		} else if(e.getSource() == btnDefaultFile) {
 			btnDefaultFile.setBorder(new LineBorder(Color.DARK_GRAY, 2, true));
 			lblDescription.setForeground(Color.DARK_GRAY);
-		}
-	}
-	
-	public boolean isValidXML(File file) {
-		Document dom;
-		DocumentBuilder db;
-		DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-		try {
-		  db = dbf.newDocumentBuilder();
-		  dom = db.parse(file.getAbsolutePath());
-		  Element rootElement = dom.getDocumentElement();
-		  return rootElement.getAttribute("label").equals("BWSquares");
-		} catch(Exception ex) {
-			return false;
 		}
 	}
 }

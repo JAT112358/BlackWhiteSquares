@@ -13,6 +13,7 @@ import es.deusto.ingenieria.is.search.algorithms.blind.BreadthFS;
 import es.deusto.ingenieria.is.search.formulation.Problem;
 import es.deusto.ingenieria.is.search.formulation.State;
 import es.deusto.ingenieria.is.search.xml.StateXMLReader;
+import gui.SquaresPanel;
 
 public class BWSProblem extends Problem{	
 	private String path;
@@ -48,7 +49,7 @@ public class BWSProblem extends Problem{
 		this.addInitialState(gatherInitialPercepts());
 	}
 	
-	public void solve(SearchMethod searchMethod, JTextArea console) {		
+	public void solve(SearchMethod searchMethod, JTextArea console, SquaresPanel squaresPanel) {		
 		console.append("----- Start " + searchMethod.getClass().getSimpleName() + " algorithm -----");
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss.S");
 		Date beginDate = GregorianCalendar.getInstance().getTime();
@@ -87,21 +88,30 @@ public class BWSProblem extends Problem{
 			console.append("\nSteps: ");
 			System.out.println("\nSteps: ");
 			
-			for(String operator: operators) {
+			int stepIndex = 0;
+			squaresPanel.getSquares().get(0).setStep(stepIndex);
+			for(int i=0; i<operators.size(); i++) {
 				String movement = "\n - Move ";
-				if(Move.Positions.ONE.toString().equals(operator)){
+				if(Move.Positions.ONE.toString().equals(operators.get(i))){
 					movement += "1";
-				} else if(Move.Positions.TWO.toString().equals(operator)){
+					stepIndex += 1;
+				} else if(Move.Positions.TWO.toString().equals(operators.get(i))){
 					movement += "2";
-				} else if(Move.Positions.FOUR.toString().equals(operator)){
+					stepIndex += 2;
+				} else if(Move.Positions.FOUR.toString().equals(operators.get(i))){
 					movement += "4";
+					stepIndex +=4;
+				}
+				if(stepIndex < squaresPanel.getSquares().size()) {
+					squaresPanel.getSquares().get(stepIndex).setStep(i+1);
+					squaresPanel.updateUI();
 				}
 				movement += " positions.";
 				console.append(movement);
 				System.out.println(movement);
 			}
-			console.append("\n");
 			System.out.println("\n");
+			console.append("\n\nTotal steps:\t" + operators.size());
 		} else {
 			console.append("\n- Unable to find the solution! :(");
 			System.out.println("\n- Unable to find the solution! :(");
@@ -126,6 +136,6 @@ public class BWSProblem extends Problem{
 			System.out.println("Is not a final state :(");
 		}
 		// SOLVE
-		problem.solve(BreadthFS.getInstance(), new JTextArea());
+		problem.solve(BreadthFS.getInstance(), new JTextArea(), new SquaresPanel(((Environment) problem.gatherInitialPercepts()).getSquares()));
 	}
 }

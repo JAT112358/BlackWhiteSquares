@@ -15,7 +15,7 @@ public class Window extends JFrame {
 		super();
 		setTitle("BlackWhiteSquares");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(800, 500));
+		setSize(new Dimension(800, 550));
 		setLocationRelativeTo(null);
 	}
 

@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.BorderLayout;
+
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
@@ -18,6 +20,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+
+import utils.JFile;
+
+import components.Window;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
 public class MainPanel extends JPanel {
 	private static final long 	serialVersionUID = -5851058755580336316L;
@@ -34,7 +45,7 @@ public class MainPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{180, 0, 0};
-		gridBagLayout.rowHeights = new int[]{100, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{100, 50, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 2.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -51,6 +62,33 @@ public class MainPanel extends JPanel {
 		
 		squares_panel = new SquaresPanel(((Environment) problem.gatherInitialPercepts()).getSquares());
 		panel_top.add(squares_panel);
+		
+		JButton btnOpen = new JButton("Open...");
+		btnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = JFile.getFile("XML file", "xml");
+				if(file != null)
+				{
+					if(JFile.isValidXML(file, "label", "BWSquares"))
+					{
+						BWSProblem problem = new BWSProblem(file.getAbsolutePath());			
+						problem.addInitialState(problem.gatherInitialPercepts());
+						Window.getInstance().setContainer(new MainPanel(problem));
+						Window.getInstance().setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(Window.getInstance(), "Error select a velid XML file.", "Error", JOptionPane.ERROR_MESSAGE );
+					}
+				}
+			}
+		});
+		btnOpen.setForeground(Color.BLACK);
+		btnOpen.setFont(new Font("Arial", Font.PLAIN, 16));
+		GridBagConstraints gbc_btnOpen = new GridBagConstraints();
+		gbc_btnOpen.fill = GridBagConstraints.BOTH;
+		gbc_btnOpen.insets = new Insets(0, 25, 10, 5);
+		gbc_btnOpen.gridx = 0;
+		gbc_btnOpen.gridy = 1;
+		add(btnOpen, gbc_btnOpen);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(new TitledBorder(null, "Algorithms", TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, null));
@@ -70,12 +108,14 @@ public class MainPanel extends JPanel {
 					int index = list_algorithms.locationToIndex(e.getPoint());
 					if(index == 0) {
 						MainPanel.this.problem.restart();
+						MainPanel.this.squares_panel.restart();
 						MainPanel.this.console.setText("");
-						MainPanel.this.problem.solve(BreadthFS.getInstance(), console);
+						MainPanel.this.problem.solve(BreadthFS.getInstance(), console, squares_panel);
 					} else if(index == 1) {
 						MainPanel.this.problem.restart();
+						MainPanel.this.squares_panel.restart();
 						MainPanel.this.console.setText("");
-						MainPanel.this.problem.solve(DepthFS.getInstance(), console);
+						MainPanel.this.problem.solve(DepthFS.getInstance(), console, squares_panel);
 					}
 				}
 			}

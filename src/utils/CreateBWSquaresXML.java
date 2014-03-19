@@ -111,6 +111,6 @@ public class CreateBWSquaresXML {
 	}
 	
 	public static void main(String [] args) {
-		CreateBWSquaresXML.create(50);
+		CreateBWSquaresXML.create(1000);
 	}
 }

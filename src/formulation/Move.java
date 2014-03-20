@@ -30,8 +30,6 @@ public class Move extends Operator {
 	// HOMEWORK 2/4 [Punto 4]
 	protected boolean isApplicable(State state) {
 		Environment currentEnvironment = (Environment) state;
-		Environment newEnvironment = currentEnvironment.clone();	
-		newEnvironment.setSelectedIndex(currentEnvironment.getSelectedIndex());
 		switch(positions.getPositions()) {
 			case 2:
 				return currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).isWhite();

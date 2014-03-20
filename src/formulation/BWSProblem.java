@@ -33,7 +33,7 @@ public class BWSProblem extends Problem{
 	
 	// HOMEWORK 2/4 [Punto 6]
 	public boolean isFinalState(State state) {
-		if (state != null && state != null && state instanceof Environment) {
+		if (state != null && state instanceof Environment) {
 			Environment environment = (Environment)state;
 			return (environment.getSelectedIndex() >= environment.getSquares().size());
 		} 

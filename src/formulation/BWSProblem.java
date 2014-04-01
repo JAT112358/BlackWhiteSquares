@@ -66,19 +66,19 @@ public class BWSProblem extends Problem{
 		console.append("\nEnd:\t" + formatter.format(endDate));
 		System.out.println("\n* End   '" + searchMethod.getClass().getSimpleName() + "' (" + formatter.format(endDate) + ")");
 		
-		long miliseconds = (int) Math.abs(beginDate.getTime() - endDate.getTime());
-		long seconds = miliseconds / 1000;
+		long miliseconds = Math.abs(beginDate.getTime() - endDate.getTime());
+		/*long seconds = miliseconds / 1000;
 		miliseconds %= 1000;		
 		long minutes = seconds / 60;
 		seconds %= 60;
 		long hours = minutes / 60;
 		minutes %= 60;
-		
+		*/
 		String time = "Serach lasts:\t";
-		time += (hours > 0) ? hours + "h" : "";
+		/*time += (hours > 0) ? hours + "h" : "";
 		time += (minutes > 0) ? minutes + "m" : "";
 		time += (seconds > 0) ? seconds + "s" : "";
-		time += (miliseconds > 0) ? miliseconds + "ms" : "";
+		*/time +=  miliseconds + "ms";
 		
 		console.append("\n" + time);
 		System.out.println("\n" + time);

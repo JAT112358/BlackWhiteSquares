@@ -1,15 +1,17 @@
 package gui;
 
+import heuristic.HeuristicEvaluationFunction;
+
 import javax.swing.JPanel;
 import formulation.Environment;
 import es.deusto.ingenieria.is.search.algorithms.blind.BreadthFS;
 import es.deusto.ingenieria.is.search.algorithms.blind.DepthFS;
+import es.deusto.ingenieria.is.search.algorithms.heuristic.BestFS;
 import formulation.BWSProblem;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.BorderLayout;
-
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -21,11 +23,9 @@ import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
-
 import utils.JFile;
-
+import algorithms.AStar;
 import components.Window;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -103,22 +103,37 @@ public class MainPanel extends JPanel {
 		gbc_scrollPane.gridy = 2;
 		add(scrollPane, gbc_scrollPane);
 		
-		String [] algorithms = new String[]{" BreadthFS", " DepthFS"};
+		String [] algorithms = new String[]{" BreadthFS", " DepthFS", " BestFS", " A*"};
 		list_algorithms = new JList<String>(algorithms);
 		list_algorithms.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					int index = list_algorithms.locationToIndex(e.getPoint());
-					if(index == 0) {
-						MainPanel.this.problem.restart();
-						MainPanel.this.squares_panel.restart();
-						MainPanel.this.console.setText("");
-						MainPanel.this.problem.solve(BreadthFS.getInstance(), console, squares_panel);
-					} else if(index == 1) {
-						MainPanel.this.problem.restart();
-						MainPanel.this.squares_panel.restart();
-						MainPanel.this.console.setText("");
-						MainPanel.this.problem.solve(DepthFS.getInstance(), console, squares_panel);
+					switch(index) {
+						case 0:
+							MainPanel.this.problem.restart();
+							MainPanel.this.squares_panel.restart();
+							MainPanel.this.console.setText("");
+							MainPanel.this.problem.solve(BreadthFS.getInstance(), console, squares_panel);
+							break;
+						case 1:
+							MainPanel.this.problem.restart();
+							MainPanel.this.squares_panel.restart();
+							MainPanel.this.console.setText("");
+							MainPanel.this.problem.solve(DepthFS.getInstance(), console, squares_panel);
+							break;
+						case 2:
+							MainPanel.this.problem.restart();
+							MainPanel.this.squares_panel.restart();
+							MainPanel.this.console.setText("");
+							MainPanel.this.problem.solve(new BestFS(new HeuristicEvaluationFunction()), console, squares_panel);
+							break;
+						case 3:
+							MainPanel.this.problem.restart();
+							MainPanel.this.squares_panel.restart();
+							MainPanel.this.console.setText("");
+							MainPanel.this.problem.solve(new AStar(new HeuristicEvaluationFunction()), console, squares_panel);
+							break;
 					}
 				}
 			}

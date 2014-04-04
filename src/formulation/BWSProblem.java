@@ -59,28 +59,31 @@ public class BWSProblem extends Problem{
 		console.append("----- Start " + searchMethod.getClass().getSimpleName() + " algorithm -----");
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss.S");
 		Date beginDate = GregorianCalendar.getInstance().getTime();
+		long start = System.nanoTime();
 		console.append("\nStart:\t" + formatter.format(beginDate));
 		System.out.println("\n\n* Start '" + searchMethod.getClass().getSimpleName() + "' (" + formatter.format(beginDate) + ")");
 		Node finalNode = searchMethod.search(this, this.getInitialStates().get(0));
-		Date endDate = GregorianCalendar.getInstance().getTime();		
+		Date endDate = GregorianCalendar.getInstance().getTime();
+		long end = System.nanoTime();
 		console.append("\nEnd:\t" + formatter.format(endDate));
 		System.out.println("\n* End   '" + searchMethod.getClass().getSimpleName() + "' (" + formatter.format(endDate) + ")");
 		
 		long miliseconds = Math.abs(beginDate.getTime() - endDate.getTime());
-		/*long seconds = miliseconds / 1000;
+		long seconds = miliseconds / 1000;
 		miliseconds %= 1000;		
 		long minutes = seconds / 60;
 		seconds %= 60;
 		long hours = minutes / 60;
 		minutes %= 60;
-		*/
+		
 		String time = "Serach lasts:\t";
-		/*time += (hours > 0) ? hours + "h" : "";
+		time += (hours > 0) ? hours + "h" : "";
 		time += (minutes > 0) ? minutes + "m" : "";
 		time += (seconds > 0) ? seconds + "s" : "";
-		*/time +=  miliseconds + "ms";
+		time +=  miliseconds + "ms";
 		
 		console.append("\n" + time);
+		console.append("\nSerach lasts:\t" + (end - start) + "ns");
 		System.out.println("\n" + time);
 		
 		if (finalNode != null) {

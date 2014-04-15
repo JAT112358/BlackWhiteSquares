@@ -27,10 +27,25 @@ public class SquaresPanel extends JPanel {
 		return this.squares;
 	}
 	
-	public void restart() {
+	public void setFinalState(ArrayList<Square> squares) {
+		removeAll();
 		for(Square square: squares) {
-			square.setStep(-1);
+			square.setPreferredSize(new Dimension(50, 50));
+			add(square);
 		}
+		setPreferredSize(new Dimension(50 * squares.size() + 10, 50));
+		setMinimumSize(new Dimension(50 * squares.size() + 10, 50));
+		updateUI();
+	}
+	
+	public void restart() {
+		removeAll();
+		for(Square square: squares) {
+			square.setPreferredSize(new Dimension(50, 50));
+			add(square);
+		}
+		setPreferredSize(new Dimension(50 * squares.size() + 10, 50));
+		setMinimumSize(new Dimension(50 * squares.size() + 10, 50));
 		updateUI();
 	}
 }

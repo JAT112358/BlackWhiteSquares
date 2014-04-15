@@ -40,6 +40,7 @@ public class MainPanel extends JPanel {
 	private JList<String>		list_algorithms;
 	private JCheckBox 			checkBoxLog;
 	private BWSProblem			problem;
+	private JPanel 				panel_top;
 		
 	public MainPanel(final BWSProblem problem) {			
 		this.problem = problem;
@@ -53,7 +54,7 @@ public class MainPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JPanel panel_top = new JPanel();
+		panel_top = new JPanel();
 		panel_top.setOpaque(false);
 		GridBagConstraints gbc_panel_top = new GridBagConstraints();
 		gbc_panel_top.gridwidth = 2;
@@ -115,25 +116,45 @@ public class MainPanel extends JPanel {
 							MainPanel.this.problem.restart();
 							MainPanel.this.squares_panel.restart();
 							MainPanel.this.console.setText("");
-							MainPanel.this.problem.solve(BreadthFS.getInstance(), console, squares_panel);
+							if(MainPanel.this.problem.isFullyObserved(MainPanel.this.problem.getInitialStates().get(0))) {
+								MainPanel.this.problem.solve(BreadthFS.getInstance(), console, squares_panel);
+							} else {
+								JOptionPane.showMessageDialog(Window.getInstance(), "No se puede resolver, el problema no es totalmente observable", 
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
 							break;
 						case 1:
 							MainPanel.this.problem.restart();
 							MainPanel.this.squares_panel.restart();
 							MainPanel.this.console.setText("");
-							MainPanel.this.problem.solve(DepthFS.getInstance(), console, squares_panel);
+							if(MainPanel.this.problem.isFullyObserved(MainPanel.this.problem.getInitialStates().get(0))) {
+								MainPanel.this.problem.solve(DepthFS.getInstance(), console, squares_panel);
+							} else {
+								JOptionPane.showMessageDialog(Window.getInstance(), "No se puede resolver, el problema no es totalmente observable", 
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
 							break;
 						case 2:
 							MainPanel.this.problem.restart();
 							MainPanel.this.squares_panel.restart();
 							MainPanel.this.console.setText("");
-							MainPanel.this.problem.solve(new BestFS(new HeuristicEvaluationFunction()), console, squares_panel);
+							if(MainPanel.this.problem.isFullyObserved(MainPanel.this.problem.getInitialStates().get(0))) {
+								MainPanel.this.problem.solve(new BestFS(new HeuristicEvaluationFunction()), console, squares_panel);
+							} else {
+								JOptionPane.showMessageDialog(Window.getInstance(), "No se puede resolver, el problema no es totalmente observable", 
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
 							break;
 						case 3:
 							MainPanel.this.problem.restart();
 							MainPanel.this.squares_panel.restart();
 							MainPanel.this.console.setText("");
-							MainPanel.this.problem.solve(new AStar(new HeuristicEvaluationFunction()), console, squares_panel);
+							if(MainPanel.this.problem.isFullyObserved(MainPanel.this.problem.getInitialStates().get(0))) {
+								MainPanel.this.problem.solve(new AStar(new HeuristicEvaluationFunction()), console, squares_panel);
+							} else {
+								JOptionPane.showMessageDialog(Window.getInstance(), "No se puede resolver, el problema no es totalmente observable", 
+										"Error", JOptionPane.ERROR_MESSAGE);
+							}
 							break;
 						case 4:
 							MainPanel.this.problem.restart();

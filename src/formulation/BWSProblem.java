@@ -34,9 +34,14 @@ public class BWSProblem extends Problem{
 	}
 	
 	public State gatherPercepts(State state) {
-		String color = JOptionPane.showInputDialog(Window.getInstance(), "Introduce the color (b/w): ");			
-		// TODO Check input
-		((Environment) state).getSquares().get(((Environment) state).getSelectedIndex()).setColor(color.charAt(0));
+		Environment environment = (Environment)state;
+		if(environment.getSquares().get(environment.getSelectedIndex()).getColor() == 'x') {
+			String color = "";
+			do {
+				color = JOptionPane.showInputDialog(Window.getInstance(), "Introduce the color (b/w): ");
+			} while(color == null || (color.charAt(0) != 'b' && color.charAt(0) != 'w'));
+			((Environment) state).getSquares().get(((Environment) state).getSelectedIndex()).setColor(color.charAt(0));
+		}
 		return state;
 	}
 	
@@ -55,7 +60,7 @@ public class BWSProblem extends Problem{
 	}
 	
 	public void restart() {
-		this.addInitialState(gatherInitialPercepts());
+		this.getInitialStates().set(0, gatherInitialPercepts());		
 	}
 	
 	public void setLogEnable(boolean enable) {
@@ -65,8 +70,12 @@ public class BWSProblem extends Problem{
 	public boolean isFullyObserved(State state) {
 		if (state != null && state instanceof Environment) {
 			Environment environment = (Environment)state;
-			System.out.println("Color : " + environment.getSquares().get(environment.getSelectedIndex()).getColor());
-			return environment.getSquares().get(environment.getSelectedIndex()).getColor() != 'x';
+			for(Square square : environment.getSquares()) {
+				if(square.getColor() == 'x') {
+					return false;
+				}
+			}
+			return true;
 		}
 		return false;
 	}
@@ -113,9 +122,11 @@ public class BWSProblem extends Problem{
 			System.out.println("\n- Final state:" + finalNode.getState());
 			console.append("\nSteps: ");
 			System.out.println("\nSteps: ");
+					
+			ArrayList<Square> finalSquares = ((Environment) finalNode.getState()).getSquares();
 			
 			int stepIndex = 0;
-			squaresPanel.getSquares().get(0).setStep(stepIndex);
+			finalSquares.get(0).setStep(stepIndex);
 			for(int i=0; i<operators.size(); i++) {
 				String movement = "\n - Move ";
 				if(Move.Positions.ONE.toString().equals(operators.get(i))){
@@ -128,14 +139,14 @@ public class BWSProblem extends Problem{
 					movement += "4";
 					stepIndex +=4;
 				}
-				if(stepIndex < squaresPanel.getSquares().size()) {
-					squaresPanel.getSquares().get(stepIndex).setStep(i+1);
-					squaresPanel.updateUI();
+				if(stepIndex < finalSquares.size()) {
+					finalSquares.get(stepIndex).setStep(i+1);
 				}
 				movement += " positions.";
 				console.append(movement);
 				System.out.println(movement);
 			}
+			squaresPanel.setFinalState(finalSquares);
 			System.out.println("\n");
 			console.append("\n\nTotal steps:\t" + operators.size());
 		} else {
@@ -151,7 +162,6 @@ public class BWSProblem extends Problem{
 		problem.addInitialState(problem.gatherInitialPercepts());
 		
 		// SOLVE
-//		problem.solve(BreadthFS.getInstance(), new JTextArea(), new SquaresPanel(((Environment) problem.gatherInitialPercepts()).getSquares()));
 		problem.solve(new HillClimbing(new HeuristicEvaluationFunction()), new JTextArea(), new SquaresPanel(((Environment) problem.gatherInitialPercepts()).getSquares()));
 	}
 }

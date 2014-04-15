@@ -30,9 +30,7 @@ public class Environment extends State {
 	}
 	
 	public void move(int positions) {
-		if(selected + positions <= squares.size()) {
-			selected += positions;
-		}
+		selected += positions;
 	}
 	
 	public boolean equals(Object obj) {

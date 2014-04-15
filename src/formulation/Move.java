@@ -37,7 +37,7 @@ public class Move extends Operator {
 			case 4:
 				return currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).getColor() == 'b';
 			default:
-				return true;
+				return false;
 		}
 	}
 	

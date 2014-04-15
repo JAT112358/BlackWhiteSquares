@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
-
 import components.Window;
-
 import algorithms.HillClimbing;
 import utils.ReadBWSquaresXML;
 import es.deusto.ingenieria.is.search.algorithms.Node;
@@ -37,18 +34,15 @@ public class BWSProblem extends Problem{
 	}
 	
 	public State gatherPercepts(State state) {
-		Environment newEnvironment = ((Environment)state).clone();
 		String color = JOptionPane.showInputDialog(Window.getInstance(), "Introduce the color (b/w): ");			
 		// TODO Check input
-		newEnvironment.getSquares().get(newEnvironment.getSelectedIndex()).setColor(color.charAt(0));
-		return newEnvironment;
+		((Environment) state).getSquares().get(((Environment) state).getSelectedIndex()).setColor(color.charAt(0));
+		return state;
 	}
 	
 	public boolean isFinalState(State state) {
 		if (state != null && state instanceof Environment) {
 			Environment environment = (Environment)state;
-			System.out.println("Selected : " + environment.getSelectedIndex());
-			System.out.println("Size : " + environment.getSquares().size());
 			return (environment.getSelectedIndex() >= environment.getSquares().size());
 		} 
 		return false;

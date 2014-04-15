@@ -1,3 +1,4 @@
+
 package heuristic;
 
 import es.deusto.ingenieria.is.search.algorithms.Node;
@@ -19,7 +20,16 @@ public class HeuristicEvaluationFunction extends EvaluationFunction {
 	// El resultado se redondea hacia arriba.
 	@Override
 	public double calculateH(Node arg0) {
-		return Math.ceil((((Environment) arg0.getState()).getSquares().size() 
-				- ((Environment) arg0.getState()).getSelectedIndex()) / 4);
+		System.out.println("total " + ((Environment) arg0.getState()).getSquares().size());
+		System.out.println("selected "+ ((Environment) arg0.getState()).getSelectedIndex());
+		
+		int total = ((Environment) arg0.getState()).getSquares().size();
+		int actual = ((Environment) arg0.getState()).getSelectedIndex();
+		int squares = total - actual;
+		double result = Math.ceil((double)squares / 4);
+		
+		System.out.println("Result " + result);
+		
+		return result;
 	}
 }

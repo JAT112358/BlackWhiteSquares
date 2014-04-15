@@ -29,32 +29,33 @@ public class HillClimbing extends HeuristicSearchMethod {
 		boolean localBestFound = false;
 		
 		currentNode = new Node(initialState);	
+		currentNode.setG(this.getEvaluationFunction().calculateG(currentNode));
+		currentNode.setH(this.getEvaluationFunction().calculateH(currentNode));
 
 		while ( ! localBestFound) {
-				if (problem.isFinalState(currentNode.getState())){
-					localBestFound = true;
-				}else{
-					bestSuccessorNode = this.expand(currentNode, problem, new ArrayList<State>(), 
-							new ArrayList<State>()).get(0);
-					
-					System.out.println("search..."+bestSuccessorNode.getH());
-					System.out.println("search2..."+currentNode.getH());
-					
-					if (bestSuccessorNode != null) {
-						if(currentNode.compareTo(bestSuccessorNode) == 1 || currentNode.compareTo(bestSuccessorNode) == 0) {
-							localBestFound = true;
-						} else {
-							currentNode = bestSuccessorNode;
-						}
-					}
+				
+			if (bestSuccessorNode != null) {
+				if(problem.isFinalState(bestSuccessorNode.getState())) {
+					currentNode = bestSuccessorNode;
+					break;
 				}
+			}
+					
+			bestSuccessorNode = this.expand(currentNode, problem, new ArrayList<State>(), 
+					new ArrayList<State>()).get(0);
 			
+			System.out.println("search..."+bestSuccessorNode.getH()+bestSuccessorNode);
+			System.out.println("search2..."+currentNode.getH());
+			
+			if (bestSuccessorNode != null) {
+				if(currentNode.compareTo(bestSuccessorNode) == 1) {
+					localBestFound = true;
+				} else {
+					currentNode = bestSuccessorNode;
+				}
+			}
 		}
-		if (localBestFound) {
-			return currentNode;
-		} else {
-			return null;
-		}
+		return currentNode;
 	}
 
 	protected List<Node> expand(Node node, Problem problem, List<State> generatedStates, List<State> expandedStates) {
@@ -73,12 +74,12 @@ public class HillClimbing extends HeuristicSearchMethod {
 			if (currentState != null) {
 				currentNode = new Node(currentState);
 				if( ! problem.isFullyObserved(currentState)) {
-					System.out.println("no es observable");
 					currentNode.setState(problem.gatherPercepts(currentState));
 					currentState = currentNode.getState();
 				}
-				bestSuccessorNode = currentNode;
-				bestSuccessorNode.setH(this.getEvaluationFunction().calculateH(bestSuccessorNode));
+//				bestSuccessorNode = currentNode;
+//				bestSuccessorNode.setG(this.getEvaluationFunction().calculateG(bestSuccessorNode));
+//				bestSuccessorNode.setH(this.getEvaluationFunction().calculateH(bestSuccessorNode));
 				
 				//process the list of problem operators
 				for (Operator operator : problem.getOperators()) {
@@ -93,17 +94,29 @@ public class HillClimbing extends HeuristicSearchMethod {
 						successorNode.setParent(node);
 						successorNode.setDepth(node.getDepth() + 1);
 						//evaluation function = heuristic function
+						successorNode.setG(this.getEvaluationFunction().calculateG(successorNode));
 						successorNode.setH(this.getEvaluationFunction().calculateH(successorNode));
 						
 						//Add the new node to the list of successor nodes.
-						if(successorNode.compareTo(bestSuccessorNode) == -1) {
-							bestSuccessorNode = successorNode;
-						}
+						bestSuccessor.add(successorNode);
+//						if(successorNode.compareTo(bestSuccessorNode) <= 0) {
+//							bestSuccessorNode = successorNode;
+//						}
+					}
+				}
+				bestSuccessor.get(0).setG(this.getEvaluationFunction().calculateG(bestSuccessor.get(0)));
+				bestSuccessor.get(0).setH(this.getEvaluationFunction().calculateH(bestSuccessor.get(0)));
+				bestSuccessorNode = bestSuccessor.get(0);
+
+				for(int i=1; i<bestSuccessor.size(); i++) {
+					bestSuccessor.get(i).setG(this.getEvaluationFunction().calculateG(bestSuccessor.get(i)));
+					bestSuccessor.get(i).setH(this.getEvaluationFunction().calculateH(bestSuccessor.get(i)));
+					if(bestSuccessor.get(i).compareTo(bestSuccessorNode) <= 0) {
+						bestSuccessor.set(0, bestSuccessor.get(i));
 					}
 				}
 			}
 		}	
-		bestSuccessor.add(bestSuccessorNode);
 		return bestSuccessor;
 	}
 }

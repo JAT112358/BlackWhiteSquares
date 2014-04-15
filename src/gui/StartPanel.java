@@ -93,7 +93,7 @@ public class StartPanel extends JPanel implements MouseListener {
 				}
 			}
 		} else if(e.getSource() == btnDefaultFile) {
-			BWSProblem problem = new BWSProblem("data/blackwhitesquares1.xml");			
+			BWSProblem problem = new BWSProblem("data/blackwhitesquaresPartialpercepts1.xml");			
 			problem.addInitialState(problem.gatherInitialPercepts());
 			Window.getInstance().setContainer(new MainPanel(problem));
 			Window.getInstance().setVisible(true);	

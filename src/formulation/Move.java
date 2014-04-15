@@ -27,20 +27,20 @@ public class Move extends Operator {
 		this.positions = positions;
 	}
 
-	// HOMEWORK 2/4 [Punto 4]
 	protected boolean isApplicable(State state) {
 		Environment currentEnvironment = (Environment) state;
 		switch(positions.getPositions()) {
+			case 1:
+				return currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).getColor() != 'x';
 			case 2:
-				return currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).isWhite();
+				return currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).getColor() == 'w';
 			case 4:
-				return ! currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).isWhite();
+				return currentEnvironment.getSquares().get(currentEnvironment.getSelectedIndex()).getColor() == 'b';
 			default:
 				return true;
 		}
 	}
 	
-	// HOMEWORK 2/4 [Punto 4]
 	protected State effect(State state) {
 		Environment newEnvironment = ((Environment) state).clone();
 		newEnvironment.move(positions.getPositions());
@@ -51,7 +51,6 @@ public class Move extends Operator {
 		return this.positions.toString();
 	}
 	
-	// HOMEWORK 2/4 [Punto 7]
 	public static void main (String [] args) {
 		ReadBWSquaresXML reader = new ReadBWSquaresXML("data/blackwhitesquares1.xml");
 		Environment e = (Environment) reader.getState();

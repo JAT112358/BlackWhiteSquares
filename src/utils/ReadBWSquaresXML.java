@@ -11,12 +11,16 @@ import formulation.Square;
 
 public class ReadBWSquaresXML extends StateXMLReader {
 	private ArrayList<Square> 	squares;
+	private int 				size;
 
 	public ReadBWSquaresXML(String xmlFile) {
 		super(xmlFile);
 	}
 	
 	public State getState() {
+		for(int i=this.squares.size(); i<size; i++) {
+			this.squares.add(new Square('x'));
+		}
 		Environment environment = new Environment(this.squares);
 		environment.setSelectedIndex(0);
 		return environment;
@@ -26,8 +30,14 @@ public class ReadBWSquaresXML extends StateXMLReader {
 		try {		
 			if (qName.equals("is:lineofsquares")) {
 				this.squares = new ArrayList<Square>();	
+				this.size = Integer.parseInt(attributes.getValue("length"));
+
 			} else if (qName.equals("is:white") || qName.equals("is:black")) {
-				this.squares.add(new Square(qName.equals("is:white")));
+				if(qName.equals("is:white")) {
+					this.squares.add(new Square('w'));
+				} else {
+					this.squares.add(new Square('b'));
+				}
 			}
 		} catch (Exception ex) {
 			System.out.println(this.getClass().getName() + ".startElement(): " + ex);

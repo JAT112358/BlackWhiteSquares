@@ -22,5 +22,4 @@ public class HeuristicEvaluationFunction extends EvaluationFunction {
 		return Math.ceil((((Environment) arg0.getState()).getSquares().size() 
 				- ((Environment) arg0.getState()).getSelectedIndex()) / 4);
 	}
-
 }

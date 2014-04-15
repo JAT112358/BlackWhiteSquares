@@ -7,20 +7,27 @@ import javax.swing.JPanel;
 
 public class Square extends JPanel {
 	private static final long 	serialVersionUID = -4162750023324593339L;
-	private boolean				isWhite;
+	private char				color;
 	private int					step;
 	
-	public Square(boolean isWhite) {
+	public Square(char color) {
 		super();
-		this.isWhite = isWhite;
+		this.color = color;
 		this.step = -1;
 		
-		if( ! isWhite)
-			setBackground(Color.BLACK);
+		if(color == 'b') {
+			setBackground(Color.BLACK);			
+		} else if(color == 'w') {
+			setBackground(Color.WHITE);
+		}
 	}
 	
-	public boolean isWhite() {
-		return isWhite;
+	public char getColor() {
+		return color;
+	}
+	
+	public void setColor(char color) {
+		this.color = color;
 	}
 	
 	public void setStep(int step) {
@@ -28,24 +35,20 @@ public class Square extends JPanel {
 	}
 	
 	public String toString() {
-		if(isWhite) 
-			return "[W]"; 
-		else 
-			return "[B]"; 
+		return "[" + color + "]";
 	}
 	
-	// HOMEWORK 2/4 [Punto 3]
 	public boolean equals(Object obj) {
-		return obj != null && obj instanceof Square && ((Square) obj).isWhite == isWhite;
+		return obj != null && obj instanceof Square && ((Square) obj).color == color;
 	}
 	
 	public void paint(Graphics g) {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		if(isWhite) {
-			g.setColor(Color.WHITE);
-		} else {
+		if(color == 'b') {
 			g.setColor(Color.BLACK);
+		} else if(color == 'w') {
+			g.setColor(Color.WHITE);
 		}
 		g.fillRect(3, 3, this.getWidth()-6, this.getHeight()-6);
 		g.setFont(new Font("Arial", Font.BOLD, 20));

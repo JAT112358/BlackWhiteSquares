@@ -17,6 +17,10 @@ public class Environment extends State {
 		return this.squares;
 	}
 	
+	public void setSquares(ArrayList<Square> squares) {
+		this.squares = squares;
+	}
+	
 	public int getSelectedIndex() {
 		return this.selected;
 	}
@@ -25,14 +29,12 @@ public class Environment extends State {
 		this.selected = selected;
 	}
 	
-	// HOMEWORK 2/4 [Punto 4]
 	public void move(int positions) {
 		if(selected + positions <= squares.size()) {
 			selected += positions;
 		}
 	}
 	
-	// HOMEWORK 2/4 [Punto 3]
 	public boolean equals(Object obj) {
 		return obj != null && obj instanceof Environment && ((Environment)obj).selected == this.selected;
 	}

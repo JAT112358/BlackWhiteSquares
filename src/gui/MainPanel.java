@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import utils.JFile;
 import algorithms.AStar;
+import algorithms.HillClimbing;
 import components.Window;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -103,7 +104,7 @@ public class MainPanel extends JPanel {
 		gbc_scrollPane.gridy = 2;
 		add(scrollPane, gbc_scrollPane);
 		
-		String [] algorithms = new String[]{" BreadthFS", " DepthFS", " BestFS", " A*"};
+		String [] algorithms = new String[]{" BreadthFS", " DepthFS", " BestFS", " A*", "Hill Climbing"};
 		list_algorithms = new JList<String>(algorithms);
 		list_algorithms.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -133,6 +134,12 @@ public class MainPanel extends JPanel {
 							MainPanel.this.squares_panel.restart();
 							MainPanel.this.console.setText("");
 							MainPanel.this.problem.solve(new AStar(new HeuristicEvaluationFunction()), console, squares_panel);
+							break;
+						case 4:
+							MainPanel.this.problem.restart();
+							MainPanel.this.squares_panel.restart();
+							MainPanel.this.console.setText("");
+							MainPanel.this.problem.solve(new HillClimbing(new HeuristicEvaluationFunction()), console, squares_panel);
 							break;
 					}
 				}
